@@ -22,11 +22,12 @@ Application web moderne pour rechercher des produits pharmaceutiques et trouver 
 npm install
 ```
 
-2. Configurer l'URL de l'API (optionnel) :
-Créer un fichier `.env.local` :
+2. Configurer l'URL de l'API (obligatoire) :
+Créez un fichier `.env.local` à la racine du projet avec :
 ```
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
+Adaptez la valeur pour votre environnement (Vercel, etc.). Un exemple est disponible dans `.env.example`.
 
 3. Lancer le serveur de développement :
 ```bash
@@ -53,10 +54,11 @@ pharmacy_front_client/
 │   ├── layout.tsx          # Layout principal
 │   ├── page.tsx            # Page d'accueil
 │   ├── search/
-│   │   └── page.tsx        # Page de résultats de recherche
+│   │   ├── page.tsx        # Wrapper serveur + Suspense
+│   │   └── SearchClient.tsx# Composant client (hooks)
 │   └── globals.css         # Styles globaux
 ├── lib/
-│   └── api.ts              # Client API
+│   └── api.ts              # Client API (NEXT_PUBLIC_API_URL requis)
 ├── types/
 │   └── index.ts            # Types TypeScript
 └── ...
@@ -64,7 +66,7 @@ pharmacy_front_client/
 
 ## 🔗 API Backend
 
-Cette application nécessite le backend `pharmacy` qui doit être lancé sur `http://localhost:8000` (ou l'URL configurée).
+Cette application nécessite le backend `pharmacy` (FastAPI) lancé sur l'URL configurée via `NEXT_PUBLIC_API_URL`.
 
 Endpoints utilisés :
 - `GET /api/recherche/produit?nom={nom}&latitude={lat}&longitude={lng}` - Recherche de produits

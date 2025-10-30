@@ -1,7 +1,15 @@
 import axios, { AxiosInstance } from 'axios';
 import type { ProduitDisponible, Produit } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  if (typeof window !== 'undefined') {
+    // Visible dans la console du navigateur en dev si la variable n'est pas définie
+    // eslint-disable-next-line no-console
+    console.warn('NEXT_PUBLIC_API_URL is not set. Configure it in your .env.local file.');
+  }
+}
 
 // Créer une instance axios avec configuration
 const apiClient: AxiosInstance = axios.create({
@@ -33,10 +41,10 @@ export const rechercheApi = {
       }
       // Sinon, c'est probablement une erreur réseau ou endpoint non trouvé
       if (error.response?.status === 404) {
-        throw new Error('Endpoint non trouvé. Vérifiez que le backend est bien lancé sur http://localhost:8000');
+        throw new Error('Endpoint non trouvé. Vérifiez NEXT_PUBLIC_API_URL dans vos variables d\'environnement.');
       }
-      if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
-        throw new Error('Impossible de se connecter au serveur. Vérifiez que le backend est bien lancé.');
+      if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
+        throw new Error('Impossible de se connecter au serveur. Vérifiez que le backend est lancé et NEXT_PUBLIC_API_URL configuré.');
       }
       throw error;
     }
