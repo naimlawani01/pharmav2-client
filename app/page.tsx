@@ -110,7 +110,7 @@ export default function HomePage() {
                       showHistory={true}
                       placeholder="Recherchez un médicament (ex: Paracétamol, Aspirine...)"
                       className="w-full"
-                      inputClassName="w-full py-6 px-4 text-lg bg-transparent outline-none text-gray-900 placeholder-gray-400 text-left"
+                      inputClassName="w-full px-4 py-4 md:py-6 text-base md:text-lg bg-transparent outline-none text-gray-900 placeholder:text-sm md:placeholder:text-base placeholder-gray-400 text-left"
                     />
                   </div>
                   <button
